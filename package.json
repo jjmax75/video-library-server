@@ -1,0 +1,19 @@
+{
+  "name": "video-library-server",
+  "version": "1.0.0",
+  "description": "Provides API for videos",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjmax75/video-library-server.git"
+  },
+  "author": "John Behan <behanj@gmail.com> (http://boxitoff.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjmax75/video-library-server/issues"
+  },
+  "homepage": "https://github.com/jjmax75/video-library-server#readme"
+}
