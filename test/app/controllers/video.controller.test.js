@@ -17,7 +17,7 @@ describe( "Get all videos", () => {
   // Test will pass if we get all videos
   it( "should return all videos", (done) => {
     const VideoDBMock = sinon.mock(Video);
-    const expectedResult = { status: true, video: [] };
+    const expectedResult = {};
     VideoDBMock.expects( 'find' ).yields( null, expectedResult );
     Video.find( ( err, result ) => {
       VideoDBMock.verify();
@@ -30,7 +30,7 @@ describe( "Get all videos", () => {
   // Test will pass if we fail to get a video
   it( "should return error", ( done ) => {
     const VideoDBMock = sinon.mock( Video );
-    const expectedResult = { status: false, error: "Something went wrong" };
+    const expectedResult = {};
     VideoDBMock.expects( 'find' ).yields( expectedResult, null );
     Video.find( ( err, result ) => {
       VideoDBMock.verify();
@@ -52,7 +52,7 @@ describe( "Update a video by id", () => {
   it( "should updated a video by id", (done) => {
     const VideoDBMock = sinon.mock( new Video( { viewed: true } ));
     const video = VideoDBMock.object;
-    const expectedResult = { status: true };
+    const expectedResult = {};
     VideoDBMock.expects( 'save' ).withArgs( { _id: 12345 } ).yields( null, expectedResult );
     video.save( ( err, result ) => {
       VideoDBMock.verify();
@@ -66,7 +66,7 @@ describe( "Update a video by id", () => {
   it( "should return error if update action fails", (done) => {
     const VideoDBMock = sinon.mock( new Video( { viewed: true } ));
     const video = VideoDBMock.object;
-    const expectedResult = { status: false };
+    const expectedResult = {};
     VideoDBMock.expects( 'save' ).withArgs( { _id: 12345 } ).yields( expectedResult, null );
     video.save( ( err, result ) => {
       VideoDBMock.verify();
