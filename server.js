@@ -2,28 +2,39 @@ const express = require( 'express' );
 const mongoose = require( 'mongoose' );
 const morgan = require( 'morgan' );
 const bodyParser = require( 'body-parser' );
-const methodOverride = require( 'method-override' );
 const app = express();
 
 require('dotenv').config()
-const config = require( './app/config/config' );
 
 app.use( morgan( 'dev' ) ); // log every request to the console
-app.use( bodyParser.urlencoded( { 'extended':'true' } ) ); // parse application/x-www-form-urlencoded
+app.use( bodyParser.urlencoded( { extended: true } ) ); // parse application/x-www-form-urlencoded
 app.use( bodyParser.json() ); // parse application/json
-app.use( bodyParser.json( { type: 'application/vnd.api+json' } ) ); // parse application/vnd.api+json as json
-app.use( methodOverride() );
 
-//Connecting MongoDB using mongoose to our application
-mongoose.connect( config.db );
+const port = process.env.PORT || 8080;
+mongoose.connect( process.env.DB_URI );
+const Video = require( './app/models/video.model' );
 
-//This callback will be triggered once the connection is successfully established to MongoDB
-mongoose.connection.on( 'connected', () => {
-  console.log( 'Mongoose default connection open to ' + config.db );
+const router = express.Router();
+
+router.use( ( req, res, next ) => {
+  console.log( 'request being processed' );
+  next()
 });
 
-//Express application will listen to port mentioned in our configuration
-app.listen( config.port, (err) => {
-  if (err) throw err;
-  console.log( 'App listening on port ' + config.port );
+router.get( '/', (req, res) => {
+  res.json( { message: 'API is up and running' } );
 });
+
+router.route( '/videos' )
+  .get( ( req, res ) => {
+    Video.find( ( err, video ) => {
+      if( err ) res.send( err );
+      res.json( video );
+    });
+  });
+
+app.use( '/api', router );
+
+app.listen( port );
+
+console.log( 'App is listening on port', port );
