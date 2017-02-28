@@ -33,6 +33,26 @@ router.route( '/videos' )
     });
   });
 
+router.route( '/videos/:video_id' )
+  .get( ( req, res ) => {
+    Video.findOne( { 'video_id': req.params.video_id }, ( err, video ) => {
+      if ( err ) res.send( err );
+      res.json( video );
+    });
+  })
+  .put( ( req, res ) => {
+    Video.findOne( { 'video_id': req.params.video_id }, ( err, video ) => {
+      if ( err ) res.send( err );
+      video.last_watched = Date.now();
+
+      video.save( ( err ) => {
+        if (err) res.send(err);
+
+        res.json({ message: 'Video updated!' });
+      });
+    })
+  });
+
 app.use( '/api', router );
 
 app.listen( port );
