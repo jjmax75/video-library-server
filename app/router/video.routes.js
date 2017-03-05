@@ -19,10 +19,12 @@ const getVideo = ( req, res ) => {
 
 // update last watched time of single video
 const updateVideoLastWatched = ( req, res ) => {
-  VideoModel.findOne( { 'video_id': req.params.video_id }, ( err, video ) => {
-    if ( err ) res.send( err );
-    video.last_watched = Date.now();
 
+  VideoModel.findOne( { 'video_id': req.params.video_id }, ( err, video ) => {
+
+    if ( err ) res.send( err );
+
+    video.last_watched = Date.now();
     video.save( ( err ) => {
       if (err) res.send(err);
 
