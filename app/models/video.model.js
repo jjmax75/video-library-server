@@ -1,7 +1,7 @@
 const mongoose = require( 'mongoose' );
 const Schema = mongoose.Schema;
 
-const VideoSchema = Schema({
+const VideoSchema = new Schema({
   'video': { type: String },
   'video-href': { type: String },
   'video_id': { type: String },
