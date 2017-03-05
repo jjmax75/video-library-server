@@ -13,7 +13,9 @@ const port = process.env.PORT || 8080;
 const VideoRoutes = require( './app/router/video.routes' );
 
 // DB
-mongoose.connect( process.env.DB_URI );
+process.env.NODE_ENV === 'test' ?
+  mongoose.connect( process.env.TEST_DB_URI ) :
+  mongoose.connect( process.env.DB_URI );
 const VideoModel = require( './app/models/video.model' );
 
 // Modules
@@ -22,6 +24,8 @@ app.use( bodyParser.urlencoded( { extended: true } ) );
 app.use( bodyParser.json() );
 app.use( bodyParser.text() );
 app.use( bodyParser.json( { type: 'application/json' } ) );
+
+app.use( '/api', router );
 
 router.use( ( req, res, next ) => {
   console.log( 'request being processed' );
@@ -39,8 +43,8 @@ router.route( '/videos/:video_id' )
   .get( VideoRoutes.getVideo )
   .put( VideoRoutes.updateVideoLastWatched );
 
-app.use( '/api', router );
-
 app.listen( port );
 
 console.log( 'App is listening on port', port );
+
+module.exports = app;
