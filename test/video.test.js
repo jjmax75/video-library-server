@@ -14,8 +14,19 @@ chai.use( chaiHttp );
 describe( 'Videos', () => {
   before( done => {
     VideoModel.remove({}, err => {
-      done();
     });
+    const testVideo = new VideoModel({
+      "description": "Video Description",
+      "last_watched": "",
+      "pagination-href": "pagination-href",
+      "tags": "test, video",
+      "title": "Video Title",
+      "video": "Test Video",
+      "video-href": "video-href",
+      "video_id": "12345678"
+    });
+    testVideo.save();
+    done();
   });
 
   // test Get all videos
