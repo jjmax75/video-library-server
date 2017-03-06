@@ -64,4 +64,32 @@ describe( 'Videos', () => {
       });
     });
   });
+
+  // test Update a video
+  describe( '/PUT video', () => {
+
+    it( 'should PUT update of time viewed to video', done => {
+
+      // setup a test video
+      const testVideo = new VideoModel({
+        "description": "Video Description",
+        "pagination-href": "pagination-href",
+        "tags": "test, video",
+        "title": "Video Title",
+        "video": "Test Video",
+        "video-href": "video-href",
+        "video_id": "12345678"
+      });
+      testVideo.save( ( err, video ) => {
+        chai.request( server )
+          .put( '/api/videos/12345678' )
+          .end( (err, res) => {
+            res.should.have.status( 200 );
+            res.body.should.be.a( 'object' );
+            res.body.should.have.property( 'message' ).eql( 'Video updated!' );
+            done();
+          });
+      });
+    });
+  });
 });
