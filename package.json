@@ -19,6 +19,7 @@
   "homepage": "https://github.com/jjmax75/video-library-server#readme",
   "dependencies": {
     "body-parser": "1.16.0",
+    "cors": "2.8.1",
     "dotenv": "4.0.0",
     "express": "4.14.1",
     "mongoose": "4.8.1",
